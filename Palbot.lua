@@ -4160,10 +4160,16 @@ while true do
       start()
     end 
     if runNecro then
+      bossBuffRegion:highlight(1)
+      toast("searching miniBossBuff")
       if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) then
-        print("Mini boss buff found.")
+        toast("Mini boss buff found.")
         click(miniBossLocation)
       end
+      else
+        toast("Mini boss buff not found.")
+      end
+      bossBuffRegion:highlight(0)
     end       
     if victoryDiamondRegion:exists(Pattern("victoryDiamond.png"):similar(.7), 0.1) and not victoryDefeatStageRegion:exists(Pattern("arena.png"):similar(.7), 0.3) then
       winCount = winCount + 1
