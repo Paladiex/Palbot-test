@@ -4165,7 +4165,6 @@ while true do
       if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) then
         toast("Mini boss buff found.")
         click(miniBossLocation)
-      end
       else
         toast("Mini boss buff not found.")
       end
