@@ -2,7 +2,7 @@ localPath = scriptPath()
 isTrial = false
 maxTrialTimeout = 3600
 commonLib = loadstring(httpGet("https://raw.githubusercontent.com/AnkuLua/commonLib/master/commonLib.lua"))()
-getNewestVersion = loadstring(httpGet("https://raw.githubusercontent.com/auto-config/Palbot-test/master/version.lua"))
+getNewestVersion = loadstring(httpGet("https://raw.githubusercontent.com/digaomatias/Palbot-test/master/version.lua"))
 latestVersion = getNewestVersion()
 currentVersion = dofile(localPath .."version.lua")
 print (currentVersion)
@@ -25,9 +25,9 @@ function automaticUpdates ()
     if currentVersion == latestVersion then
       toast ("You are up to date!")
     else
-      httpDownload("https://raw.githubusercontent.com/auto-config/Palbot-test/master/version.lua", localPath .."version.lua")
-      httpDownload("https://raw.githubusercontent.com/auto-config/Palbot-test/master/Palbot.lua", localPath .."Palbot.lua")
-      httpDownload("https://raw.githubusercontent.com/auto-config/Palbot-test/master/imageupdater.lua", localPath .."imageupdater.lua")
+      httpDownload("https://raw.githubusercontent.com/digaomatias/Palbot-test/master/version.lua", localPath .."version.lua")
+      httpDownload("https://raw.githubusercontent.com/digaomatias/Palbot-test/master/Palbot.lua", localPath .."Palbot.lua")
+      httpDownload("https://raw.githubusercontent.com/digaomatias/Palbot-test/master/imageupdater.lua", localPath .."imageupdater.lua")
       scriptExit("You have Updated Palbot!")
     end
   end
@@ -324,6 +324,8 @@ slot1MaxRegion = Region(450,668,345,165)
 slot2MaxRegion = Region(825,668,345,165)
 slot3MaxRegion = Region(1215,668,345,165)
 slot4MaxRegion = Region(435,797,345,165)
+bossBuffRegion = Region(1420,75,485,115)
+miniBossLocation = Location(1211, 278)
 end
 function captureScreenshot()
   setImagePath(localPath .. "Runes/")
@@ -4153,10 +4155,16 @@ while true do
     testHighlight()
   elseif runLiveArena == true then
     runLiveArenaStart()
-  elseif not runLiveArena or not runQuickClick or not runRiftRaid then
+  else
     if startRegion:exists(Pattern("start.png"):similar(imgAccuracy), 0.1) then
       start()
-    end
+    end 
+    if runNecro then
+      if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) then
+        print("Mini boss buff found.")
+        click(miniBossLocation)
+      end
+    end       
     if victoryDiamondRegion:exists(Pattern("victoryDiamond.png"):similar(.7), 0.1) and not victoryDefeatStageRegion:exists(Pattern("arena.png"):similar(.7), 0.3) then
       winCount = winCount + 1
       runLmt = runLmt - 1
