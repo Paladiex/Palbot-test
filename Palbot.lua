@@ -4144,7 +4144,8 @@ showBattleResult("Begin")
 timerNoActivity = Timer()
 timerTrial = Timer()
 timerMagicShop = Timer()
-while true do
+local miniBossFound = false
+while true do  
   if runRiftRaid == true then
     findRift ()
     clickRiftRaid()
@@ -4159,12 +4160,13 @@ while true do
     if startRegion:exists(Pattern("start.png"):similar(imgAccuracy), 0.1) then
       start()
     end 
-    if runNecro then
-      bossBuffRegion:highlight(1)
+    if runNecro then      
       toast("searching miniBossBuff")
-      if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) then
+      bossBuffRegion:highlight(1)
+      if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) and not miniBossFound then
         toast("Mini boss buff found.")
         click(miniBossLocation)
+        miniBossFound = true
       else
         toast("Mini boss buff not found.")
       end
@@ -4173,6 +4175,7 @@ while true do
     if victoryDiamondRegion:exists(Pattern("victoryDiamond.png"):similar(.7), 0.1) and not victoryDefeatStageRegion:exists(Pattern("arena.png"):similar(.7), 0.3) then
       winCount = winCount + 1
       runLmt = runLmt - 1
+      miniBossFound = false
       showBattleResult("Start Battle")
       resetTimerNoActivity()
       if runAutoSwitchFodder == true or stopMaxLevel == true then
@@ -4196,6 +4199,7 @@ while true do
     if reviveNoRegion:exists(Pattern("noRevive.png"):similar(imgAccuracy), 0.1) then
       loseCount = loseCount + 1
       runLmt = runLmt - 1
+      miniBossFound = false
       showBattleResult("Battle Start")
       printBattleMessage()
       resetTimerNoActivity()
