@@ -326,6 +326,8 @@ slot3MaxRegion = Region(1215,668,345,165)
 slot4MaxRegion = Region(435,797,345,165)
 bossBuffRegion = Region(1420,75,485,115)
 miniBossLocation = Location(1211, 278)
+fodderInfoRegion = Region(795,146,305,80)
+fodderCloseLocation = Location(1541,186)
 end
 function captureScreenshot()
   setImagePath(localPath .. "Runes/")
@@ -1565,6 +1567,9 @@ end
 function StorageFodderEvaluater()
   evaluateStorage = true
   while evaluateStorage do
+    if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
+      click(fodderCloseLocation)
+    end
     if fodderFill < 1 then
       fodderStorageOkRegion:click(Pattern("ok.png"):similar(.80))
       evaluateStorage = false
@@ -4160,10 +4165,10 @@ while true do
     if startRegion:exists(Pattern("start.png"):similar(imgAccuracy), 0.1) then
       start()
     end 
-    if runNecro then      
+    if runNecro and not miniBossFound then      
       toast("searching miniBossBuff")
       bossBuffRegion:highlight(1)
-      if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) and not miniBossFound then
+      if bossBuffRegion:exists(Pattern("nb10MiniBossBuff.png"):similar(imgAccuracy), 0.1) then
         toast("Mini boss buff found.")
         click(miniBossLocation)
         miniBossFound = true
