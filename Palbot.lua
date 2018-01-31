@@ -1564,9 +1564,12 @@ function clickFriend()
   end
   isClickFriend = true
 end
+function fodderPicker()
+
+end
 function StorageFodderEvaluater()
   evaluateStorage = true
-  while evaluateStorage do
+  while evaluateStorage do    
     if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
       click(fodderCloseLocation)
     end
@@ -1587,9 +1590,12 @@ function StorageFodderEvaluater()
       wait(.1)
     end
     monLevelSpot = Region(1436 - monX*156, 830 - monY*156, 150, 55)
+    monLevelSpot:highlight(1)
     checkMonsRegion = Region(1491 - monX*156, 725 - monY*156, 90, 60)
+    checkMonsRegion:highlight(1)
     emptyFodderRegion = Region(1450 - monX*156, 750 - monY*156, 120, 110)
-    if  monLevelSpot:exists(Pattern("maxFodder.png"):similar(.75), 0.1) then
+    emptyFodderRegion:highlight(1)
+    if  monLevelSpot:exists(Pattern("maxFodder.png"):similar(.65), 0.1) then
       if monLevelSpot:exists(Pattern("maxFodder40.png"):similar(.90), 0.1) then
         scriptExit("No more monsters to max!")
       end
@@ -1603,12 +1609,19 @@ function StorageFodderEvaluater()
           fodderStorageOkRegion:click(Pattern("ok.png"):similar(.80))
           monX = 0
           monY = 0
-          evaluateStorage = false
+          if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
+            click(fodderCloseLocation)
+          else
+            evaluateStorage = false
+          end
         end
       end
     end
     monX = monX+1
   end
+end
+function FodderScrollRight()  
+    swipe(Location(110, 741), Location(1100, 741))
 end
 function StorageFodderScrollBottom()
   local a = (storageMonsters / 32)
