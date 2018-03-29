@@ -35,6 +35,7 @@ end
 function defaultValues()
   monX = 0
   monY = 0
+  storageScrollY = 0
 winCount = 0
 loseCount = 0
 arenaWinCount = 0
@@ -1568,6 +1569,14 @@ function fodderPicker()
 
 end
 function StorageFodderEvaluater()
+  while storageScrollY > 0 do
+    storageScrollY = storageScrollY - 1 
+      dragDrop(Location(574, 273), Location(574, 582))      
+      wait (.1)
+      dragDrop(Location(574, 273), Location(574, 583))
+      wait(.1)
+  end
+
   evaluateStorage = true
   while evaluateStorage do    
     if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
@@ -1582,7 +1591,8 @@ function StorageFodderEvaluater()
       monY = monY+1
     end
     if monY > 3 then monY = 0
-      dragDrop(Location(574, 273), Location(574, 582))
+      storageScrollY = storageScrollY + 1 
+      dragDrop(Location(574, 273), Location(574, 582))      
       wait (.1)
       dragDrop(Location(574, 273), Location(574, 583))
       wait(.1)
@@ -1605,8 +1615,6 @@ function StorageFodderEvaluater()
         fodderFill = fodderFill - 1
         if fodderFill < 1 then
           fodderStorageOkRegion:click(Pattern("ok.png"):similar(.80))
-          monX = 0
-          monY = 0
           if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
             click(fodderCloseLocation)
           else
