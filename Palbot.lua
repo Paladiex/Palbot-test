@@ -1613,6 +1613,7 @@ function StorageFodderEvaluater()
       if fodderFill > 0 then
         click(Location (1511 - monX*156, 830 - monY*156))
         fodderFill = fodderFill - 1
+        monX = monX - 1 
         if fodderFill < 1 then
           fodderStorageOkRegion:click(Pattern("ok.png"):similar(.80))
           if fodderInfoRegion:exists(Pattern("userLevel.png"):similar(.75), 0.1) then
