@@ -1577,11 +1577,9 @@ function StorageFodderEvaluater()
       fodderStorageOkRegion:click(Pattern("ok.png"):similar(.80))
       evaluateStorage = false
     end
-    if monX > 7 then monX = 0 monY = monY+1
-      dragDrop(Location(574, 273), Location(574, 582))
-      wait (.1)
-      dragDrop(Location(574, 273), Location(574, 583))
-      wait(.1)
+    if monX > 7 then 
+      monX = 0 
+      monY = monY+1
     end
     if monY > 3 then monY = 0
       dragDrop(Location(574, 273), Location(574, 582))
